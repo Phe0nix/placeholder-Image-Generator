@@ -1,10 +1,8 @@
 body {
     font-family: helvetica;
     font-size: 15px;
-    max-width: 600px;
-    padding: 10px;
-    margin: auto;
-    width: 100%;
+    padding: 10px 20px;
+    margin: 0;
 }
 
 input {
