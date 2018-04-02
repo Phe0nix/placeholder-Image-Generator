@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Image Generator</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <h2 class="heading">Image Generator</h2>
+    <div class="button">
+        <a href="https://phe0nix.github.io/" id="home" class="button">
+            <span>Home</span>
+        </a>
+        <a href="https://github.com/Phe0nix/image-generator" id="view-on-github" class="button">
+            <span>View on GitHub</span>
+        </a>
+    </div>
+    <p>Width:
+        <input type="text" class="width" placeholder="width without extension">
+    </p>
+    <p>Height:
+        <input type="text" class="height" placeholder="height without extension">
+    </p>
+    <p>Background:
+        <input type="color" class="bgColor">
+    </p>
+    <button class="gen">Generate Image</button>
+    <p class="result">
+        <canvas style="display: none" class="block"></canvas>
+    </p>
+    <div class="type_and_download_image" style="display: none">
+        <p>Image Format:
+            <select name="imageType" id="imageType">
+                <option value="" disabled selected>Choose a format</option>
+                <option value="png">.png</option>
+                <option value="jpeg">.jpg</option>
+            </select>
+            <span class="quality" style="display: none">Jpg Quality:
+                <select id="quality_value">
+                    <option value="" disabled selected>Choose quality</option>
+                    <option value="low">Low</option>
+                    <option value="med">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </span>
+        </p>
+        <a href="#" class="download">Download</a>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
