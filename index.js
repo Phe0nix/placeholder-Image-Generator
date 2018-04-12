@@ -14,6 +14,8 @@ var w = document.querySelector(".width"),
   quality_value = document.querySelector("#quality_value"),
   c, url;
 
+// function execute after click the "Generate Image" button
+
 function createCanvas() {
   if (w.value === '' || w.value.match(/\s{1,}/)) {
     r.innerHTML = `<span>Please insert width of the image.</span>`;
