@@ -1,3 +1,5 @@
+// Placeholder image generator script start form here
+
 var w = document.querySelector(".width"),
   h = document.querySelector(".height"),
   r = document.querySelector(".result"),
@@ -80,3 +82,5 @@ function downloadImage() {
 genBtn.addEventListener("click", createCanvas);
 
 dl.addEventListener("click", downloadImage);
+
+// Placeholder image generator script ends here
