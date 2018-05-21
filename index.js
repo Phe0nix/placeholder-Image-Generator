@@ -45,7 +45,7 @@ function createCanvas() {
 		c.fillStyle = "#fff";
 		c.textAlign = "center";
 		c.fillText(""+ w.value +"px / "+ h.value +"px", (w.value/2), (h.value/2));
-    r.append(canva);
+    r.appendChild(canva);
     typeAndDownloadImage.style.display = "block";
     url = canva.toDataURL();
   }
