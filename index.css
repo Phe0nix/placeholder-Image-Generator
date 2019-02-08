@@ -109,11 +109,6 @@ a.download:active {
     background: transparent url(https://phe0nix.github.io/assets/images/octocat-icon.png) 0 50% no-repeat;
 }
 
-#home span {
-    background: transparent url(https://avatars0.githubusercontent.com/u/9951055) 1px 50% no-repeat;
-    background-size: 20px;
-}
-
 a.button span {
     display: block;
     height: 23px;
