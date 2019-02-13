@@ -5,6 +5,11 @@ body {
     margin: 0;
 }
 
+.inputFields p{
+    display: inline-block;
+    margin-right: 15px;
+}
+
 input {
     vertical-align: middle;
 }
