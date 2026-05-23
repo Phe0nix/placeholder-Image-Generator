@@ -1,48 +1,67 @@
-# Placeholder-Image-Generator
-This is a simple placeholder image generator and downloader. Just fill the appropriate fields and generate image by clicking "Generate Image" and then download with choosing the image extension.<br>
+# Placeholder Image Generator
+
+A fast, browser-based tool to generate custom placeholder images, preview them instantly, and export in multiple formats.
 
 #### Demo - [Placeholder Image Generator](https://phe0nix.github.io/placeholder-Image-Generator/)
 
-## Updated Features
-- Responsive, modern UI with better visual hierarchy and mobile support.
-- Improved validation for width and height (whole numbers, 1 to 4000).
-- Aspect ratio lock and one-click dimension swap.
-- Quick size presets (social and widescreen formats).
-- Color controls for background and text.
-- Custom label text and configurable output filename.
-- Export options for PNG, JPG, and WEBP.
-- Adjustable quality slider for JPG/WEBP.
-- Data URL copy action for quick sharing in design/dev workflows.
-- URL-driven configuration so placeholder settings can be shared and restored from the address bar.
+## Features
+
+- Responsive UI that works across desktop and mobile.
+- Instant canvas preview with generated file metadata (size, format, approximate KB).
+- Strong width/height validation:
+	- whole numbers only
+	- allowed range: `1` to `4000`
+- Built-in image presets for common use cases.
+- Collapsible preset gallery (view more/view fewer).
+- Quick size chips for common dimensions.
+- Aspect ratio lock for proportional resizing.
+- One-click dimension swap.
+- Background and text color controls.
+- Random palette generator.
+- Custom label text (falls back to `WIDTH x HEIGHT` when empty).
+- Custom output filename with safe download sanitization.
+- Export formats: `PNG`, `JPG`, `WEBP`.
+- Quality slider for lossy formats (`JPG`/`WEBP`).
+- Download generated image directly.
+- Copy generated image as Data URL.
+- Copy shareable URL with full current configuration.
+- URL-driven state restore on page load.
+- Keyboard shortcut behavior: pressing `Enter` in key inputs triggers generation.
+
+## Built-In Image Presets
+
+- `og-image`: `1200 x 630`, optimized for Open Graph sharing.
+- `avatar-128`: `128 x 128`, profile/avatar placeholder.
+- `card-thumb`: `800 x 450`, card/content thumbnails.
+- `hero-banner`: `1440 x 720`, landing page hero blocks.
+- `mobile-screen`: `390 x 844`, mobile UI mock dimensions.
+- `video-thumb`: `1280 x 720`, video/media thumbnail format.
 
 ## How To Use
-1. Enter width and height in pixels.
-2. Optional: choose a preset, keep aspect ratio lock, or swap dimensions.
-3. Pick background and text colors.
-4. Optional: provide label text and filename.
-5. Choose format (PNG/JPG/WEBP) and set quality for JPG/WEBP.
+
+1. Set width and height, or choose an image preset/quick size.
+2. (Optional) Keep aspect ratio lock enabled, or swap dimensions.
+3. Pick background and text colors, or use Random Palette.
+4. (Optional) Add label text and output filename.
+5. Choose export format and quality (for JPG/WEBP).
 6. Click Generate Image.
-7. Download the image, copy the data URL, or copy a share URL with the current config.
+7. Download, copy Data URL, or copy a shareable URL.
 
 ## URL Parameters
-- `w`, `h`: image width and height in pixels.
-- `bg`, `fg`: background and text colors as hex values like `#2f80ed`.
+
+Use query parameters to preload and share exact configurations.
+
+- `w`, `h`: width and height in pixels.
+- `preset`: preset key (for example `og-image`, `avatar-128`).
+- `bg`, `fg`: background/text hex colors (for example `#2f80ed`).
 - `label`: custom placeholder text.
 - `file`: download filename.
 - `format`: `png`, `jpeg`, or `webp`.
-- `q`: export quality from `10` to `100`.
-- `lock`: `1` or `0` for aspect-ratio lock.
+- `q`: output quality from `10` to `100`.
+- `lock`: aspect ratio lock (`1` or `0`).
 
 Example:
 
 ```text
-?w=1200&h=630&bg=%232f80ed&fg=%23ffffff&label=Open%20Graph&file=og-image&format=webp&q=85&lock=1
+?preset=og-image&w=1200&h=630&bg=%230f172a&fg=%23f8fafc&label=Open%20Graph&file=og-image&format=webp&q=90&lock=1
 ```
-
-## Git Flow
-
-This repository now follows a lightweight Git Flow model with:
-- Long-lived branches: `master`, `develop`
-- Supporting branches: `feature/*`, `bugfix/*`, `release/*`, `hotfix/*`, `chore/*`, `docs/*`, `test/*`
-
-See the full workflow in [docs/GIT_FLOW.md](docs/GIT_FLOW.md).
