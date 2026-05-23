@@ -24,6 +24,38 @@
         <section class="app-grid">
             <form class="panel controls" id="placeholderForm" novalidate>
                 <h2>Canvas Settings</h2>
+                <section class="preset-section" id="presetSection" aria-labelledby="presetSectionTitle">
+                    <div class="section-heading">
+                        <h3 id="presetSectionTitle">Image Presets</h3>
+                        <button type="button" class="text-action" id="togglePresets" aria-expanded="false" aria-controls="presetGrid">View more presets</button>
+                    </div>
+                    <div class="preset-grid" id="presetGrid">
+                        <button type="button" class="preset-card" data-preset="og-image">
+                            <strong>Open Graph</strong>
+                            <span>1200 x 630 • WEBP</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="avatar-128">
+                            <strong>Avatar</strong>
+                            <span>128 x 128 • PNG</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="card-thumb">
+                            <strong>Card Thumbnail</strong>
+                            <span>800 x 450 • JPG</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="hero-banner">
+                            <strong>Hero Banner</strong>
+                            <span>1440 x 720 • PNG</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="mobile-screen">
+                            <strong>Mobile Screen</strong>
+                            <span>390 x 844 • PNG</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="video-thumb">
+                            <strong>Video Thumbnail</strong>
+                            <span>1280 x 720 • WEBP</span>
+                        </button>
+                    </div>
+                </section>
                 <div class="field-row two-col">
                     <label for="widthInput">Width (px)
                         <input type="number" id="widthInput" class="width" min="1" max="4000" step="1" placeholder="1200" required>
