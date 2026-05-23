@@ -4,50 +4,106 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Placeholder Image Generator</title>
-    <link rel="stylesheet" href="index.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css" />
 </head>
 
 <body>
-    <h2 class="heading">Placeholder Image Generator</h2>
-    <div class="button">
-        <a href="https://github.com/Phe0nix/image-generator" id="view-on-github" class="button" target="_blank">
-            <span>View on GitHub</span>
-        </a>
-    </div>
-    <div class='inputFields'>
-        <p>Width:
-            <input type="text" class="width" placeholder="width without extension">
-        </p>
-        <p>Height:
-            <input type="text" class="height" placeholder="height without extension">
-        </p>
-        <p>Background:
-            <input type="color" class="bgColor">
-        </p>
-    </div>
-    <button class="gen">Generate Image</button>
-    <p class="result">
-        <canvas style="display: none" class="block"></canvas>
-    </p>
-    <div class="type_and_download_image" style="display: none">
-        <p>Image Format:
-            <select name="imageType" id="imageType">
-                <option value="" disabled selected>Choose a format</option>
-                <option value="png">.png</option>
-                <option value="jpeg">.jpg</option>
-            </select>
-            <span class="quality" style="display: none">Jpg Quality:
-                <select id="quality_value">
-                    <option value="" disabled selected>Choose quality</option>
-                    <option value="low">Low</option>
-                    <option value="med">Medium</option>
-                    <option value="high">High</option>
-                </select>
-            </span>
-        </p>
-        <a href="#" class="download">Download</a>
-    </div>
-    <script src="index.min.js"></script>
+    <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+    <main class="app-shell">
+        <header class="app-header">
+            <p class="eyebrow">Designer Utility</p>
+            <h1>Placeholder Image Generator</h1>
+            <p class="subtitle">Build custom placeholders in seconds with presets, smart validation, and export controls.</p>
+            <a href="https://github.com/Phe0nix/placeholder-Image-Generator" id="view-on-github" class="github-link" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        </header>
+
+        <section class="app-grid">
+            <form class="panel controls" id="placeholderForm" novalidate>
+                <h2>Canvas Settings</h2>
+                <div class="field-row two-col">
+                    <label for="widthInput">Width (px)
+                        <input type="number" id="widthInput" class="width" min="1" max="4000" step="1" placeholder="1200" required>
+                    </label>
+                    <label for="heightInput">Height (px)
+                        <input type="number" id="heightInput" class="height" min="1" max="4000" step="1" placeholder="628" required>
+                    </label>
+                </div>
+                <div class="quick-actions">
+                    <button type="button" class="chip" data-size="1080x1080">1080 x 1080</button>
+                    <button type="button" class="chip" data-size="1200x628">1200 x 628</button>
+                    <button type="button" class="chip" data-size="1920x1080">1920 x 1080</button>
+                </div>
+                <div class="inline-controls">
+                    <label class="toggle">
+                        <input type="checkbox" id="lockAspect" checked>
+                        <span>Lock aspect ratio</span>
+                    </label>
+                    <button type="button" class="text-action" id="swapDimensions">Swap dimensions</button>
+                </div>
+
+                <div class="field-row two-col">
+                    <label for="bgColor">Background
+                        <input type="color" id="bgColor" class="bgColor" value="#2f80ed">
+                    </label>
+                    <label for="textColor">Text Color
+                        <input type="color" id="textColor" class="textColor" value="#ffffff">
+                    </label>
+                </div>
+
+                <label for="labelText">Label Text
+                    <input type="text" id="labelText" class="labelText" placeholder="Leave empty to use dimensions">
+                </label>
+
+                <label for="fileName">File Name
+                    <input type="text" id="fileName" class="fileName" value="placeholder-image" maxlength="80">
+                </label>
+
+                <div class="field-row two-col">
+                    <label for="imageType">Format
+                        <select name="imageType" id="imageType">
+                            <option value="png">PNG</option>
+                            <option value="jpeg">JPG</option>
+                            <option value="webp">WEBP</option>
+                        </select>
+                    </label>
+                    <label for="quality_value" class="quality" id="qualityWrap">Quality
+                        <input type="range" id="quality_value" min="10" max="100" value="85" step="5">
+                        <output id="qualityOutput" for="quality_value">85%</output>
+                    </label>
+                </div>
+
+                <div class="cta-row">
+                    <button type="submit" class="gen">Generate Image</button>
+                    <button type="button" class="secondary" id="randomPalette">Random Palette</button>
+                </div>
+            </form>
+
+            <section class="panel preview-panel">
+                <div class="preview-header">
+                    <h2>Preview</h2>
+                    <p id="metaInfo" class="meta">No image generated yet</p>
+                </div>
+
+                <div class="result" id="result" role="status" aria-live="polite">
+                    <canvas class="block" id="previewCanvas" width="1200" height="628"></canvas>
+                </div>
+
+                <p id="errorMessage" class="error" role="alert" aria-live="assertive"></p>
+
+                <div class="type_and_download_image" id="downloadArea">
+                    <button type="button" class="download" id="downloadBtn">Download Image</button>
+                    <button type="button" class="secondary" id="copyDataUrl">Copy Data URL</button>
+                    <button type="button" class="secondary" id="copyShareUrl">Copy Share URL</button>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="index.js"></script>
 </body>
 
 </html>
