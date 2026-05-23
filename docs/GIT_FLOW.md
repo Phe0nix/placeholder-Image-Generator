@@ -6,6 +6,8 @@ This project uses a lightweight Git Flow model.
 - `master`: production-ready code.
 - `develop`: integration branch for upcoming release.
 
+Direct `develop -> master` PRs are allowed for lightweight releases when a dedicated `release/*` branch is not needed.
+
 ## Supporting branches
 - `feature/<name>`: new features, branch from `develop`, merge into `develop`.
 - `bugfix/<name>`: non-critical fixes, branch from `develop`, merge into `develop`.
@@ -93,3 +95,9 @@ git push origin develop
 ## Automation
 - PR branch rules are validated by `.github/workflows/gitflow-branch-guard.yml`.
 - PR template enforces branch and checklist hygiene.
+- Allowed PR mappings:
+	- `feature/*`, `bugfix/*`, `chore/*`, `docs/*`, `test/*` -> `develop`
+	- `develop` -> `master`
+	- `release/*` -> `master` or `develop`
+	- `hotfix/*` -> `master` or `develop`
+	- `master` -> `develop` (back-merge)

@@ -22,6 +22,9 @@ jobs:
             feature/*|bugfix/*|chore/*|docs/*|test/*)
               [[ "$base" == "develop" ]] && valid="true"
               ;;
+            develop)
+              [[ "$base" == "master" ]] && valid="true"
+              ;;
             release/*)
               [[ "$base" == "master" || "$base" == "develop" ]] && valid="true"
               ;;
@@ -40,6 +43,7 @@ jobs:
             echo "Invalid Git Flow branch mapping: $head -> $base"
             echo "Allowed mappings:"
             echo "- feature/*, bugfix/*, chore/*, docs/*, test/* -> develop"
+            echo "- develop -> master"
             echo "- release/* -> master or develop"
             echo "- hotfix/* -> master or develop"
             echo "- master -> develop (back-merge only)"
