@@ -1,0 +1,49 @@
+name: Git Flow Branch Guard
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  validate-branch-flow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source and target branch mapping
+        shell: bash
+        run: |
+          base="${{ github.base_ref }}"
+          head="${{ github.head_ref }}"
+
+          echo "Validating PR: $head -> $base"
+
+          valid="false"
+
+          case "$head" in
+            feature/*|bugfix/*|chore/*|docs/*|test/*)
+              [[ "$base" == "develop" ]] && valid="true"
+              ;;
+            release/*)
+              [[ "$base" == "master" || "$base" == "develop" ]] && valid="true"
+              ;;
+            hotfix/*)
+              [[ "$base" == "master" || "$base" == "develop" ]] && valid="true"
+              ;;
+            master)
+              [[ "$base" == "develop" ]] && valid="true"
+              ;;
+            *)
+              valid="false"
+              ;;
+          esac
+
+          if [[ "$valid" != "true" ]]; then
+            echo "Invalid Git Flow branch mapping: $head -> $base"
+            echo "Allowed mappings:"
+            echo "- feature/*, bugfix/*, chore/*, docs/*, test/* -> develop"
+            echo "- release/* -> master or develop"
+            echo "- hotfix/* -> master or develop"
+            echo "- master -> develop (back-merge only)"
+            exit 1
+          fi
+
+          echo "Branch mapping is valid."
