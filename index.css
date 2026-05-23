@@ -1,155 +1,375 @@
+:root {
+    --bg: #fbf9f3;
+    --panel: rgba(255, 255, 255, 0.85);
+    --ink: #1a1f2b;
+    --muted: #5d667a;
+    --accent: #0f766e;
+    --accent-strong: #0f4c5c;
+    --secondary: #f5efe3;
+    --danger: #a11f2f;
+    --border: #d9d6cf;
+    --shadow: 0 12px 35px rgba(28, 31, 40, 0.14);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: helvetica;
-    font-size: 15px;
-    padding: 10px 20px;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Outfit", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at 15% 20%, #fce7c8, transparent 38%),
+        radial-gradient(circle at 85% 0%, #b7efe1, transparent 30%),
+        linear-gradient(145deg, #f7f4ed 0%, #f2eee3 50%, #eef7f6 100%);
+    overflow-x: hidden;
+}
+
+.bg-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 9s ease-in-out infinite;
+}
+
+.bg-glow-1 {
+    width: 220px;
+    height: 220px;
+    background: #f59e0b;
+    top: -40px;
+    left: -60px;
+}
+
+.bg-glow-2 {
+    width: 260px;
+    height: 260px;
+    background: #14b8a6;
+    right: -80px;
+    bottom: 80px;
+    animation-delay: 2s;
+}
+
+.app-shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2.4rem 1rem 2.8rem;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    animation: slide-in 0.5s ease-out;
+}
+
+.eyebrow {
+    margin: 0;
+    font-family: "Space Mono", monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-strong);
+}
+
+.app-header h1 {
+    margin: 0.4rem 0 0.6rem;
+    font-size: clamp(1.7rem, 4vw, 2.8rem);
+    line-height: 1.15;
+}
+
+.subtitle {
+    margin: 0 auto;
+    max-width: 700px;
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+.github-link {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.github-link:hover {
+    transform: translateY(-1px);
+    border-color: #b7b29f;
+}
+
+.app-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 450px) 1fr;
+    gap: 1rem;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid rgba(200, 196, 188, 0.85);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(6px);
+    padding: 1rem;
+    animation: fade-up 0.45s ease-out;
+}
+
+.panel h2 {
+    margin-top: 0;
+    margin-bottom: 0.85rem;
+    font-size: 1.15rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+input[type="number"],
+input[type="text"],
+select {
+    margin-top: 0.35rem;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.7rem 0.75rem;
+    font-size: 0.96rem;
+    font-family: "Outfit", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: #fff;
+}
+
+input:focus,
+select:focus,
+button:focus {
+    outline: 2px solid rgba(15, 118, 110, 0.4);
+    outline-offset: 1px;
+}
+
+.field-row {
+    display: grid;
+    gap: 0.6rem;
+}
+
+.two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.8rem;
+}
+
+.chip {
+    border: 1px dashed #ad9f7f;
+    background: #fff8e8;
+    color: #7d5a1f;
+    border-radius: 999px;
+    padding: 0.42rem 0.75rem;
+    font-size: 0.84rem;
+}
+
+.inline-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.toggle {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.toggle input {
     margin: 0;
 }
 
-.inputFields p{
-    display: inline-block;
-    margin-right: 15px;
-}
-
-input {
-    vertical-align: middle;
-}
-
-input[type=text] {
-    border: 1px solid lightgrey;
-    height: 20px;
-    border-radius: 6px;
-    padding: 5px 10px;
-}
-
-select {
-    border: 1px solid lightgrey;
-    border-radius: 6px;
-    padding: 5px 10px;
-}
-
-#imageType {
-    margin-bottom: 10px;
-}
-
-input[type=text]:focus {
-    border: 1px solid #32809a;
-    outline: 0;
-    height: 20px;
-    border-radius: 6px;
-    padding: 5px 10px;
-}
-
-input[type=color] {
-    padding: 0;
-    height: 30px;
-    background: transparent;
+.text-action {
     border: 0;
-    box-shadow: none;
-    outline: 0;
-    width: 60px;
-}
-
-input[type=color]:focus {
-    border: 1px solid #32809a;
-}
-
-.heading {
-    text-align: center;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-button,
-a.download {
-    border: 1px solid lightgrey;
-    padding: 8px 12px;
-    background: linear-gradient(to bottom, white 30%, #e9e9e9 80%);
+    background: transparent;
+    color: var(--accent-strong);
+    font-weight: 600;
     cursor: pointer;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 15px;
 }
 
-button:active,
-a.download:active {
-    outline: 0;
-    background: linear-gradient(to bottom, #e9e9e9 40%, #fff 80%);
+input[type="color"] {
+    margin-top: 0.35rem;
+    width: 100%;
+    min-height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    padding: 0.25rem;
 }
 
-.result span {
-    display: block;
-    background: #e04343;
-    padding: 12px 13px;
+.quality {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+}
+
+#qualityOutput {
+    font-family: "Space Mono", monospace;
+    font-size: 0.84rem;
+    color: var(--accent-strong);
+}
+
+.cta-row,
+.type_and_download_image {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+button {
+    border: 0;
+    border-radius: 12px;
+    padding: 0.72rem 0.95rem;
+    font-size: 0.94rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: "Outfit", "Segoe UI", sans-serif;
+}
+
+.gen,
+.download {
+    background: linear-gradient(135deg, #0f766e, #0f4c5c);
     color: #fff;
-    line-height: 1.5;
 }
 
-.button {
-    text-align: center;
-    margin-bottom: 20px;
+.secondary {
+    border: 1px solid var(--border);
+    background: var(--secondary);
+    color: #60451d;
 }
 
-.button a.button {
-    display: inline-block;
-    padding: 12px 30px;
-    margin-right: 14px;
-    font-size: 15px;
-    text-decoration: none;
-    font-weight: bold;
-    line-height: 25px;
-    color: #303030;
-    background: #fdfdfd;
-    background: -moz-linear-gradient(top, #fdfdfd 0%, #f2f2f2 100%);
-    background: -webkit-linear-gradient(top, #fdfdfd 0%, #f2f2f2 100%);
-    background: -ms-linear-gradient(top, #fdfdfd 0%, #f2f2f2 100%);
-    background: linear-gradient(top, #fdfdfd 0%, #f2f2f2 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdfd', endColorstr='#f2f2f2', GradientType=0);
-    border: solid 1px #b7b7b7;
-    border-radius: 30px;
-    box-shadow: 0px 1px 5px #e8e8e8;
+.preview-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
 }
 
-#view-on-github span {
-    background: transparent url(https://phe0nix.github.io/assets/images/octocat-icon.png) 0 50% no-repeat;
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.6rem;
 }
 
-a.button span {
-    display: block;
-    height: 23px;
-    padding-left: 35px;
+.meta {
+    margin: 0;
+    color: var(--muted);
+    font-family: "Space Mono", monospace;
+    font-size: 0.79rem;
 }
 
-@media screen and (max-width: 600px) {
-    .heading {
-        width: 100%;
-        font-size: 22px;
-        font-weight: 600;
-        margin: 8px auto 5px;
+.result {
+    border: 2px dashed #d4cbb8;
+    border-radius: 14px;
+    padding: 0.75rem;
+    min-height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(45deg, #f8f5ed 25%, transparent 25%),
+        linear-gradient(-45deg, #f8f5ed 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #f8f5ed 75%),
+        linear-gradient(-45deg, transparent 75%, #f8f5ed 75%);
+    background-size: 22px 22px;
+    background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+}
+
+canvas.block {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.error {
+    margin: 0;
+    color: var(--danger);
+    min-height: 1.2rem;
+    font-size: 0.92rem;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
     }
-    .button a.button {
-        display: inline-block;
-        padding: 5px 14px;
-        font-size: 13px;
-        text-decoration: none;
-        font-weight: bold;
-        line-height: 25px;
-        color: #303030;
-        transition: 0.2s linear;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    .button a.button:not(:last-child) {
-        margin-right: 6px;
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
     }
-    ::-webkit-input-placeholder {
-        font-size: 14px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    ::-moz-placeholder {
-        font-size: 14px;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translate(0, 0);
     }
-    :-moz-placeholder {
-        font-size: 14px;
+    50% {
+        transform: translate(14px, -10px);
     }
-    :-ms-input-placeholder {
-        font-size: 14px;
+}
+
+@media screen and (max-width: 950px) {
+    .app-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .app-shell {
+        padding: 1.3rem 0.8rem 1.6rem;
+    }
+
+    .two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .inline-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 }
