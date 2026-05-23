@@ -15,7 +15,10 @@
     const qualityOutput = document.getElementById("qualityOutput");
     const lockAspect = document.getElementById("lockAspect");
     const swapDimensions = document.getElementById("swapDimensions");
+    const presetSection = document.getElementById("presetSection");
     const presetButtons = document.querySelectorAll(".chip[data-size]");
+    const presetCards = document.querySelectorAll(".preset-card[data-preset]");
+    const togglePresets = document.getElementById("togglePresets");
     const randomPalette = document.getElementById("randomPalette");
     const downloadArea = document.getElementById("downloadArea");
     const downloadBtn = document.getElementById("downloadBtn");
@@ -37,8 +40,77 @@
         quality: 85,
         lock: true
     };
+    const namedPresets = {
+        "og-image": {
+            width: 1200,
+            height: 630,
+            bg: "#0f172a",
+            fg: "#f8fafc",
+            label: "Open Graph",
+            file: "og-image",
+            format: "webp",
+            quality: 90,
+            lock: true
+        },
+        "avatar-128": {
+            width: 128,
+            height: 128,
+            bg: "#334155",
+            fg: "#f8fafc",
+            label: "Avatar",
+            file: "avatar-128",
+            format: "png",
+            quality: 85,
+            lock: true
+        },
+        "card-thumb": {
+            width: 800,
+            height: 450,
+            bg: "#2563eb",
+            fg: "#eff6ff",
+            label: "Card Thumbnail",
+            file: "card-thumbnail",
+            format: "jpeg",
+            quality: 85,
+            lock: true
+        },
+        "hero-banner": {
+            width: 1440,
+            height: 720,
+            bg: "#0f766e",
+            fg: "#ecfeff",
+            label: "Hero Banner",
+            file: "hero-banner",
+            format: "png",
+            quality: 85,
+            lock: true
+        },
+        "mobile-screen": {
+            width: 390,
+            height: 844,
+            bg: "#7c3aed",
+            fg: "#faf5ff",
+            label: "Mobile Screen",
+            file: "mobile-screen",
+            format: "png",
+            quality: 85,
+            lock: true
+        },
+        "video-thumb": {
+            width: 1280,
+            height: 720,
+            bg: "#be123c",
+            fg: "#fff1f2",
+            label: "Video Thumbnail",
+            file: "video-thumbnail",
+            format: "webp",
+            quality: 90,
+            lock: true
+        }
+    };
     let dataUrl = "";
     let aspectRatio = 1200 / 628;
+    let selectedPreset = "";
 
     const setError = (message = "") => {
         errorMessage.textContent = message;
@@ -89,6 +161,34 @@
         lock: lockAspect.checked
     });
 
+    const getCollapsedPresetCount = () => (window.matchMedia("(max-width: 560px)").matches ? 1 : 2);
+
+    const updatePresetToggleText = () => {
+        togglePresets.textContent = presetSection.classList.contains("is-expanded") ? "View fewer presets" : "View more presets";
+        togglePresets.setAttribute("aria-expanded", String(presetSection.classList.contains("is-expanded")));
+    };
+
+    const setPresetExpansion = (isExpanded) => {
+        presetSection.classList.toggle("is-expanded", isExpanded);
+        updatePresetToggleText();
+    };
+
+    const updatePresetSelection = (presetKey = "") => {
+        selectedPreset = presetKey;
+        presetCards.forEach((card) => {
+            card.classList.toggle("is-active", card.dataset.preset === presetKey);
+        });
+
+        if (!presetKey) {
+            return;
+        }
+
+        const selectedIndex = Array.from(presetCards).findIndex((card) => card.dataset.preset === presetKey);
+        if (selectedIndex >= getCollapsedPresetCount()) {
+            setPresetExpansion(true);
+        }
+    };
+
     const buildShareUrl = () => {
         const width = parseDimension(widthInput.value, "Width");
         const height = parseDimension(heightInput.value, "Height");
@@ -110,6 +210,10 @@
 
         if (state.file) {
             url.searchParams.set("file", state.file);
+        }
+
+        if (selectedPreset) {
+            url.searchParams.set("preset", selectedPreset);
         }
 
         return url;
@@ -139,6 +243,18 @@
         updateQualityVisibility();
     };
 
+    const applyPreset = (presetKey) => {
+        const preset = namedPresets[presetKey];
+
+        if (!preset) {
+            return;
+        }
+
+        applyState(preset);
+        updatePresetSelection(presetKey);
+        generatePlaceholder();
+    };
+
     const applyUrlConfig = () => {
         const params = new URLSearchParams(window.location.search);
 
@@ -157,6 +273,14 @@
         const format = params.get("format");
         const quality = params.get("q");
         const lock = params.get("lock");
+        const preset = params.get("preset");
+
+        if (preset && namedPresets[preset]) {
+            Object.assign(nextState, namedPresets[preset]);
+            updatePresetSelection(preset);
+        } else {
+            updatePresetSelection("");
+        }
 
         if (width) {
             nextState.width = parseDimension(width, "Width");
@@ -369,16 +493,19 @@
     });
 
     widthInput.addEventListener("input", () => {
+        updatePresetSelection("");
         handleDimensionSync("width");
         syncUrlFromState();
     });
 
     heightInput.addEventListener("input", () => {
+        updatePresetSelection("");
         handleDimensionSync("height");
         syncUrlFromState();
     });
 
     imageType.addEventListener("change", () => {
+        updatePresetSelection("");
         updateQualityVisibility();
         syncUrlFromState();
         if (dataUrl) {
@@ -387,6 +514,7 @@
     });
 
     qualityInput.addEventListener("input", () => {
+        updatePresetSelection("");
         qualityOutput.textContent = `${qualityInput.value}%`;
         syncUrlFromState();
         if (dataUrl && imageType.value !== "png") {
@@ -395,6 +523,7 @@
     });
 
     swapDimensions.addEventListener("click", () => {
+        updatePresetSelection("");
         const width = widthInput.value;
         widthInput.value = heightInput.value;
         heightInput.value = width;
@@ -407,6 +536,8 @@
 
     lockAspect.addEventListener("change", () => {
         if (!lockAspect.checked) {
+            updatePresetSelection("");
+            syncUrlFromState();
             return;
         }
 
@@ -421,6 +552,7 @@
 
     presetButtons.forEach((button) => {
         button.addEventListener("click", () => {
+            updatePresetSelection("");
             const size = button.getAttribute("data-size").split("x");
             const width = Number(size[0]);
             const height = Number(size[1]);
@@ -433,13 +565,32 @@
         });
     });
 
+    presetCards.forEach((card) => {
+        card.addEventListener("click", () => {
+            applyPreset(card.dataset.preset);
+        });
+    });
+
+    togglePresets.addEventListener("click", () => {
+        setPresetExpansion(!presetSection.classList.contains("is-expanded"));
+    });
+
+    window.addEventListener("resize", () => {
+        if (selectedPreset) {
+            updatePresetSelection(selectedPreset);
+        }
+    });
+
     randomPalette.addEventListener("click", applyRandomPalette);
     downloadBtn.addEventListener("click", triggerDownload);
     copyDataUrl.addEventListener("click", copyUrl);
     copyShareUrl.addEventListener("click", copyShareableUrl);
 
     [bgInput, textColorInput, labelInput, filenameInput].forEach((field) => {
-        field.addEventListener("input", syncUrlFromState);
+        field.addEventListener("input", () => {
+            updatePresetSelection("");
+            syncUrlFromState();
+        });
     });
 
     // Quick-generate using Enter while editing fields.
@@ -452,6 +603,7 @@
         });
     });
 
+    setPresetExpansion(false);
     downloadArea.style.display = "flex";
     setDownloadEnabled(false);
     copyShareUrl.disabled = false;
